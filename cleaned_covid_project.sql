@@ -1,10 +1,12 @@
+COVID 19 DATA EXPLORATION PROJECT
+
 USE Projects;
 
 
 -- The big picture view of data
 SELECT
-	location,
-	date,
+    location,
+    date,
     total_cases,
     new_cases,
     total_deaths,
@@ -14,9 +16,9 @@ WHERE continent IS NOT NULL
 ORDER BY 1,2;
 
 
--- Looking at total_cases vs total_deaths by country: what’s the likelihood of dying if infected in your country (US)
+-- Looking at total_cases vs total_deaths by country: what√ïs the likelihood of dying if infected in your country (US)
 SELECT
-	location,
+    location,
     date,
     total_cases,
     total_deaths,
@@ -29,7 +31,7 @@ ORDER BY 1,2;
 
 -- Total_cases vs population: what percentage of population has contracted covid
 SELECT
-	location,
+    location,
     date,
     population,
     total_cases,
@@ -40,7 +42,7 @@ ORDER BY 1,2;
 
 -- Highest infection rate compared to population
 SELECT
-	location,
+    location,
     population,
     MAX(total_cases) AS highest_infection_count,
 	MAX((total_cases/population)*100) AS highest_infection_rate
@@ -53,7 +55,7 @@ ORDER BY 4 DESC;
 -- Countries with highest death count per population
 -- Using Cast Function
 SELECT
-	location,
+    location,
     MAX(CAST(total_deaths AS double)) AS highest_death_count
 FROM covid_death
 WHERE continent IS NOT NULL
@@ -62,7 +64,7 @@ ORDER BY 2 DESC;
 
 -- Highest Death Rate Per Population
 SELECT
-	location,
+    location,
     population,
     MAX(CAST(total_deaths AS double)) AS highest_death_count,
     MAX((total_deaths/population)*100) AS highest_death_rate
@@ -76,7 +78,7 @@ ORDER BY 4 DESC;
 
 -- Continents with highest death count per population
 SELECT
-	continent,
+    continent,
     MAX(CAST(total_deaths AS double)) AS highest_death_count
 FROM covid_death
 WHERE continent IS NOT NULL
@@ -140,7 +142,7 @@ WHERE dea.continent IS NOT NULL
 
 )
 SELECT 
-	*,
+    *,
     (rolling_people_vacc/population)*100 AS rolling_percent_vacc
 FROM pop_vs_vacc;
 
@@ -197,7 +199,7 @@ WHERE dea.continent IS NOT NULL;
 -- this is new cases and deaths by day globally
 CREATE VIEW daily_global_new_cases_deaths AS
 SELECT
-	date,
+    date,
     SUM(new_cases) AS global_new_cases,
     SUM(new_deaths) AS global_new_deaths
 FROM covid_death
@@ -220,7 +222,7 @@ WHERE dea.continent IS NOT NULL;
 -- global death percent by day
 CREATE VIEW global_daily_death_rate AS
 SELECT
-	date,
+    date,
     SUM(new_cases) AS global_new_cases,
     SUM(new_deaths) AS global_new_deaths,
     (SUM(new_deaths)/SUM(new_cases))*100 AS global_death_percentage
@@ -230,7 +232,7 @@ WHERE continent IS NOT NULL;
 -- death rate by continent
 CREATE VIEW death_rate_by_continent AS
 SELECT
-	location,
+    location,
     MAX(CAST(total_deaths AS double)) AS highest_death_count
 FROM covid_death
 WHERE continent IS NULL;
@@ -238,7 +240,7 @@ WHERE continent IS NULL;
 -- infection rate by country
 CREATE VIEW max_inf_rate AS
 SELECT
-	location,
+    location,
     population,
     MAX(total_cases) AS highest_infection_count,
 	MAX((total_cases/population)*100) AS highest_infection_rate
